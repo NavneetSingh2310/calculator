@@ -1,0 +1,150 @@
+<html>
+    <head>
+            <script src="https://unpkg.com/mathjs/dist/math.min.js"></script>
+            <style>
+            
+            table{
+                  border: 2px solid black;
+                  margin-left:40%;
+                  margin-top: 5%;
+                 
+
+            }
+
+           
+            
+            </style>
+    </head>
+    <body>
+        <table >
+            <tr><td colspan="2" ><textarea rows="2"  type="text" id="result" disabled></textarea></td>
+            <td><button id="clear" onclick="clearScreen()">Clear</button></td></tr>
+
+            <tr>
+                <td><button  value="1" onClick=show(1) style="width: 100%;">1</button></td>
+                <td><button  value="2" onClick=show(2) style="width: 100%;">2</button></td>
+                <td><button  value="3" onClick=show(3) style="width: 100%;">3</button></td>
+                
+            </tr>
+
+            <tr>
+                    <td><button  value="4" onClick=show(4) style="width: 100%;">4</button></td>
+                    <td><button  value="5" onClick=show(5) style="width: 100%;">5</button></td>
+                    <td><button  value="6" onClick=show(6) style="width: 100%;">6</button></td>
+                    
+                </tr>
+
+                <tr>
+                        <td><button  value="7" onClick=show(7) style="width: 100%;">7</button></td>
+                        <td><button  value="8" onClick=show(8) style="width: 100%;">8</button></td>
+                        <td><button  value="9" onClick=show(9) style="width: 100%;">9</button></td>
+                       
+                    </tr>
+
+                    <tr>
+                            <td ><button  value="0" onClick=show(0) style="width: 100%;">0</button></td>
+                            <td ><button  value="." onClick=show('.') style="width: 100%;">.</button></td>
+                            <td><button value="*" onClick=show('*') style="width: 100%;">*</button></td>
+                          
+                        
+                        </tr>
+
+                        <tr>
+                              
+                                <td><button value="+" onClick=show('+') style="width: 100%;">+</button></td>
+                                <td><button value="-" onClick=show('-') style="width: 100%;">-</button></td>
+                                <td><button value="/" onClick=show('/') style="width: 100%;">/</button></td>
+                               
+                        </tr>
+
+                        <tr>
+                                <td><button value="(" onClick=show('(') style="width: 100%;">(</button></td>    
+                            <td><button value=")" onClick=show(')') style="width: 100%;">)</button></td>
+                            <td><button value="%" onclick="show('%')"style="width: 100%;">Mod</button></td>
+                            
+                        </tr>
+
+                        <tr><td colspan="3"><button value="=" onclick="evalu()" style="width: 100%;">=</button></td></tr>
+        </table>
+    </body>
+
+    <script>
+
+        var array=[];
+    
+    function show(val)
+    {
+        
+        if(array.length==0){
+            if(val=='.')
+            {document.getElementById("result").value+='0'+val;
+             array.push(0);
+             array.push(val);
+            }
+           else  if(val=='*' || val=='/' || val=='%' ){}
+            else {
+        document.getElementById("result").value+=val;
+        array.push(val);
+            }
+        }
+        else if(val=='.')
+        {
+            let latest;
+            for(let i=0;i<array.length;i++)
+            {
+                if(array[i]=='*' || array[i]=='+' || array[i]=='-' || array[i]=='%' || array[i]=='/' || array[i]=='.'   )
+                {
+                    latest=array[i];
+                }
+            }
+            if(latest=='.')
+            {
+
+            }
+            else if(array[array.length-1]=='*' || array[array.length-1]=='+' || array[array.length-1]=='/' || array[array.length-1]=='-' || array[array.length-1]=='%' )
+            {document.getElementById("result").value+='0'+val;
+            array.push(val);}
+            else 
+            {
+            document.getElementById("result").value+=val;
+            array.push(val);    
+        }
+           
+        }
+        else if(val=='*' || val=='-' || val=='+' || val=='/' || val=='%')
+        {
+                 if(array[array.length-1]=='*' || array[array.length-1]=='+' || array[array.length-1]=='/' || array[array.length-1]=='-' || array[array.length-1]=='%' )
+                {
+
+                }
+                else {
+                    array.push(val);
+                    document.getElementById("result").value+=val;
+
+                }
+         }
+         else if(array[array.length-1]=='0' && val=='0' )
+         {
+
+         }
+         else { document.getElementById("result").value+=val;
+        array.push(val);
+        
+        }
+        }
+
+    function evalu()
+    {
+        let x = document.getElementById("result").value 
+			let y = math.evaluate(x) 
+			document.getElementById("result").value = y ;
+    }
+
+    function clearScreen()
+    {
+        document.getElementById("result").value ="";
+        array=[];
+    }
+    
+    </script>
+</html>
